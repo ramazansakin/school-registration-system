@@ -2,6 +2,7 @@ package com.rsakin.schoolregistrationsystem.controller;
 
 import com.rsakin.schoolregistrationsystem.model.entity.Course;
 import com.rsakin.schoolregistrationsystem.service.CourseService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,12 +34,14 @@ public class CourseController {
 
     // TODO : Mapper Usage with DTO
 
+    @ApiOperation("Get all courses")
     @GetMapping(value = "/all")
     public ResponseEntity<List<Course>> getAllCourses() {
         List<Course> allCourses = courseService.getAllCourses();
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 
+    @ApiOperation("Get a course with id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getCourse(
             @PathVariable @Min(1) final Long id
@@ -47,6 +50,7 @@ public class CourseController {
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
+    @ApiOperation("Create a new course")
     @PostMapping(value = "/create")
     public ResponseEntity<Course> saveCourse(
             @Valid @RequestBody final Course course
@@ -55,6 +59,7 @@ public class CourseController {
         return new ResponseEntity<>(savedCourse, HttpStatus.CREATED);
     }
 
+    @ApiOperation("Update any already defined course")
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<Course> updateCourse(
             @PathVariable @Min(1) final Long id,
@@ -64,6 +69,7 @@ public class CourseController {
         return new ResponseEntity<>(respCourse, HttpStatus.OK);
     }
 
+    @ApiOperation("Delete any already defined course")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Boolean> deleteCourse(
             @PathVariable @Min(1) final Long id
@@ -74,6 +80,7 @@ public class CourseController {
     }
 
     // Filter all courses for a specific student
+    @ApiOperation("Get all courses enrolled by a specific student")
     @GetMapping("/student/{studentId}")
     public ResponseEntity<List<Course>> getAllCoursesByStudent(
             @PathVariable @Min(1) final Long studentId
@@ -83,6 +90,7 @@ public class CourseController {
     }
 
     // Filter all courses without any students
+    @ApiOperation("Get all courses that contains any word in title")
     @GetMapping("/title/{title}")
     public ResponseEntity<List<Course>> getAllCoursesByTitle(
             @PathVariable @NotBlank @Size(max = 15) final String title

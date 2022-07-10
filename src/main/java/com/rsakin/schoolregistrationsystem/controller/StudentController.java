@@ -2,6 +2,7 @@ package com.rsakin.schoolregistrationsystem.controller;
 
 import com.rsakin.schoolregistrationsystem.model.entity.Student;
 import com.rsakin.schoolregistrationsystem.service.StudentService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,12 +34,14 @@ public class StudentController {
 
     // TODO : Mapper Usage with DTO
 
+    @ApiOperation("Get all students")
     @GetMapping(value = "/all")
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> allStudents = studentService.getAllStudents();
         return new ResponseEntity<>(allStudents, HttpStatus.OK);
     }
 
+    @ApiOperation("Get any already defined student by id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Student> getStudent(
             @PathVariable @Min(1) final Long id
@@ -48,6 +51,7 @@ public class StudentController {
     }
 
     // TODO : create new student with courses
+    @ApiOperation("Create a student")
     @PostMapping(value = "/create")
     public ResponseEntity<Student> saveStudent(
             @Valid @RequestBody final Student student
@@ -56,6 +60,7 @@ public class StudentController {
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
+    @ApiOperation("Update any already defined student by id")
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<Student> updateStudent(
             @PathVariable @Min(1) final Long id,
@@ -65,6 +70,7 @@ public class StudentController {
         return new ResponseEntity<>(respStudent, HttpStatus.OK);
     }
 
+    @ApiOperation("Delete any already defined student by id")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Boolean> deleteStudent(
             @PathVariable @Min(1) final Long id
@@ -74,6 +80,7 @@ public class StudentController {
         return new ResponseEntity<>(isDeleted, HttpStatus.OK);
     }
 
+    @ApiOperation("Register any defined student to any defined course")
     @PutMapping("/{studentId}/register/{courseId}")
     public ResponseEntity<Student> registerCourse(
             @PathVariable @Min(1) final Long studentId,
@@ -84,6 +91,7 @@ public class StudentController {
     }
 
     // Filter all students with a specific course
+    @ApiOperation("Delete any already defined student by id")
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<Student>> getAllStudentsByCourse(
             @PathVariable @Min(1) final Long courseId
@@ -93,6 +101,7 @@ public class StudentController {
     }
 
     // Filter all students without any courses
+    @ApiOperation("Get all students by name and surname")
     @GetMapping("/name/{name}/surname/{surname}")
     public ResponseEntity<List<Student>> getAllStudentsByNameAndSurname(
             @PathVariable @NotBlank @Size(max = 15) final String name,
@@ -102,6 +111,7 @@ public class StudentController {
         return new ResponseEntity<>(allByNameAndSurname, HttpStatus.OK);
     }
 
+    @ApiOperation("Get all students by surname")
     @GetMapping("/surname/{surname}")
     public ResponseEntity<List<Student>> getAllStudentsBySurname(
             @PathVariable @NotBlank @Size(max = 20) final String surname
@@ -109,6 +119,5 @@ public class StudentController {
         List<Student> allBySurname = studentService.findAllBySurname(surname);
         return new ResponseEntity<>(allBySurname, HttpStatus.OK);
     }
-
 
 }
