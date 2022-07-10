@@ -1,7 +1,7 @@
 package com.rsakin.schoolregistrationsystem.exception.handler;
 
 import com.rsakin.schoolregistrationsystem.exception.EntityNotFoundException;
-import com.rsakin.schoolregistrationsystem.exception.MaxEnrolledCourseNumberExceededException;
+import com.rsakin.schoolregistrationsystem.exception.MaxEnrollmentOrRegistrationNumberExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,8 +13,10 @@ import java.util.Map;
 @ControllerAdvice
 public class GenericExceptionHandler {
 
-    @ExceptionHandler(MaxEnrolledCourseNumberExceededException.class)
-    public ResponseEntity<Map> handleMaxEnrolledCourseNumberExceededException(MaxEnrolledCourseNumberExceededException exception) {
+    @ExceptionHandler(MaxEnrollmentOrRegistrationNumberExceededException.class)
+    public ResponseEntity<Map> handleMaxEnrolledCourseNumberExceededException(
+            MaxEnrollmentOrRegistrationNumberExceededException exception
+    ) {
         Map<String, String> response = new HashMap<>();
         response.put("error_message", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

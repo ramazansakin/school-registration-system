@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -67,7 +66,7 @@ public class CourseController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Boolean> deleteCourse(
-            @RequestParam @Min(1) final Long id
+            @PathVariable @Min(1) final Long id
     ) {
         courseService.getCourseById(id);
         boolean isDeleted = courseService.deleteCourse(id);
