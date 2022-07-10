@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -48,6 +47,7 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
+    // TODO : create new student with courses
     @PostMapping(value = "/create")
     public ResponseEntity<Student> saveStudent(
             @Valid @RequestBody final Student student
@@ -65,9 +65,9 @@ public class StudentController {
         return new ResponseEntity<>(respStudent, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Boolean> deleteStudent(
-            @RequestParam @Min(1) final Long id
+            @PathVariable @Min(1) final Long id
     ) {
         studentService.getStudentById(id);
         boolean isDeleted = studentService.deleteStudent(id);
