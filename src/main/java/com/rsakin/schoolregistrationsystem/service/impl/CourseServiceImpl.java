@@ -62,6 +62,7 @@ public class CourseServiceImpl implements CourseService {
     // Filter all courses for a specific student
     @Override
     public List<Course> getAllCoursesByStudent(final Long studentId) {
+        // check the student is already defined on db before
         studentService.getStudentById(studentId);
 
         List<Course> allCourses = getAllCourses();

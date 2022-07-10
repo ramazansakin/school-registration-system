@@ -70,6 +70,9 @@ public class StudentServiceImpl implements StudentService {
     // Filter all students with a specific course
     @Override
     public List<Student> getAllStudentsByCourse(final Long courseId) {
+        // check the course is already defined on db before
+        courseService.getCourseById(courseId);
+
         List<Student> allStudents = getAllStudents();
         return allStudents.stream().filter(student -> {
             List<Long> studentCourseIds = student.getCourses().stream().map(Course::getId).collect(Collectors.toList());
