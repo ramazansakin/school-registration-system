@@ -1,7 +1,7 @@
 package com.rsakin.schoolregistrationsystem.service.impl;
 
 import com.rsakin.schoolregistrationsystem.exception.EntityNotFoundException;
-import com.rsakin.schoolregistrationsystem.exception.MaxEnrolledCourseNumberExceededException;
+import com.rsakin.schoolregistrationsystem.exception.MaxEnrollmentOrRegistrationNumberExceededException;
 import com.rsakin.schoolregistrationsystem.model.entity.Course;
 import com.rsakin.schoolregistrationsystem.model.entity.Student;
 import com.rsakin.schoolregistrationsystem.repo.StudentRepository;
@@ -25,6 +25,8 @@ public class StudentServiceImpl implements StudentService {
 
     // A student can register to 5 course maximum
     private static final Integer MAX_REGISTERED_COURSE_NUMBER = 5;
+    // A course has 50 students maximum
+    private static final Integer MAX_ENROLLED_STUDENT_NUMBER = 50;
 
     // CRUD Operations
     @Override
@@ -60,8 +62,16 @@ public class StudentServiceImpl implements StudentService {
     public Student registerCourse(final Long studentId, final Long courseId) {
         Student studentById = getStudentById(studentId);
         Course courseById = courseService.getCourseById(courseId);
-        if (studentById.getCourses().size() > MAX_REGISTERED_COURSE_NUMBER) {
-            throw new MaxEnrolledCourseNumberExceededException(studentById, MAX_REGISTERED_COURSE_NUMBER);
+        if (studentById.getCourses().size() >= MAX_REGISTERED_COURSE_NUMBER) {
+            throw new MaxEnrollmentOrRegistrationNumberExceededException(
+                    "Max course registration number is " + MAX_REGISTERED_COURSE_NUMBER
+                            + " and it was exceeded by student : " + studentById
+            );
+        } else if (courseById.getStudents().size() >= MAX_ENROLLED_STUDENT_NUMBER) {
+            throw new MaxEnrollmentOrRegistrationNumberExceededException(
+                    "Max enrolled student number per course number is " + MAX_ENROLLED_STUDENT_NUMBER
+                            + " and it was exceeded by course : " + courseId
+            );
         }
         studentById.registerCourse(courseById);
         return studentById;

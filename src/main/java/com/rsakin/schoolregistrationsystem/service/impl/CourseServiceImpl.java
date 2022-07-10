@@ -20,16 +20,13 @@ public class CourseServiceImpl implements CourseService {
     private CourseRepository courseRepository;
     private StudentService studentService;
 
-    // Field Injection for student service to avoid circular dependency
+    // Constructor Injection with @Lazy loading for student service to avoid circular dependency
     @Autowired
     public CourseServiceImpl(CourseRepository courseRepository,
                              @Lazy StudentService studentService) {
         this.courseRepository = courseRepository;
         this.studentService = studentService;
     }
-
-    // A course has 50 students maximum
-    private static final Integer MAX_ENROLLED_STUDENT_NUMBER = 50;
 
     // CRUD Operations
     @Override
