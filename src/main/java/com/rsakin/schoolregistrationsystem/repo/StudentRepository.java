@@ -9,8 +9,9 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    List<Student> findAllBySurnameOrderBySurname(final String surname);
+    List<Student> findAllBySurnameContainingIgnoreCaseOrderBySurname(final String surname);
 
-    List<Student> findAllByNameAndSurnameOrderBySurname(final String name, final String surname);
+    List<Student> findAllByNameContainingIgnoreCaseAndSurnameContainingIgnoreCaseOrderBySurname(
+            final String name, final String surname);
 
 }

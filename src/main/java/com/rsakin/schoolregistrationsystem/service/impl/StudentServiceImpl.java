@@ -83,12 +83,13 @@ public class StudentServiceImpl implements StudentService {
     // Filter all students without any courses
     @Override
     public List<Student> findAllByNameAndSurname(final String name, final String surname) {
-        return studentRepository.findAllByNameAndSurnameOrderBySurname(name, surname);
+        return studentRepository
+                .findAllByNameContainingIgnoreCaseAndSurnameContainingIgnoreCaseOrderBySurname(name, surname);
     }
 
     @Override
     public List<Student> findAllBySurname(final String surname) {
-        return studentRepository.findAllBySurnameOrderBySurname(surname);
+        return studentRepository.findAllBySurnameContainingIgnoreCaseOrderBySurname(surname);
     }
 
 }
