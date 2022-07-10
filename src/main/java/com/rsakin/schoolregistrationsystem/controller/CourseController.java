@@ -65,7 +65,7 @@ public class CourseController {
         return new ResponseEntity<>(respCourse, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Boolean> deleteCourse(
             @RequestParam @Min(1) final Long id
     ) {
@@ -75,7 +75,7 @@ public class CourseController {
     }
 
     // Filter all courses for a specific student
-    @GetMapping("/student/:studentId")
+    @GetMapping("/student/{studentId}")
     public ResponseEntity<List<Course>> getAllCoursesByStudent(
             @PathVariable @Min(1) final Long studentId
     ) {
@@ -84,7 +84,7 @@ public class CourseController {
     }
 
     // Filter all courses without any students
-    @GetMapping("/title/:title")
+    @GetMapping("/title/{title}")
     public ResponseEntity<List<Course>> getAllCoursesByTitle(
             @PathVariable @NotBlank @Size(max = 15) final String title
     ) {
