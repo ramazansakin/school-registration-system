@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Data
@@ -22,15 +22,17 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String surname;
 
-    public void registerCourse(Course course) {
+    public void registerCourse(final Course course) {
         this.courses.add(course);
     }
 
     @ManyToMany(cascade = {
-            CascadeType.ALL
+            CascadeType.MERGE
     })
     @JoinTable(
             name = "students_courses",

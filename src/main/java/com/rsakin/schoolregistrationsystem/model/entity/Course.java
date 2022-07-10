@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 // Not used because of Data lombok annotation causes StackOverflow exception because of circular dependency
@@ -27,13 +28,15 @@ public class Course {
 
     @Getter
     @Setter
+    @NotEmpty
     private String title;
 
     @Getter
     @Setter
+    @NotEmpty
     private String details;
 
-    @ManyToMany(mappedBy = "courses", cascade = {CascadeType.ALL})
+    @ManyToMany(mappedBy = "courses", cascade = {CascadeType.MERGE})
     @Setter
     private Set<Student> students;
 
