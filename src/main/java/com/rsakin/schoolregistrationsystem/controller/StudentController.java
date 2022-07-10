@@ -74,7 +74,7 @@ public class StudentController {
         return new ResponseEntity<>(isDeleted, HttpStatus.OK);
     }
 
-    @PutMapping("/:studentId/register/:courseId")
+    @PutMapping("/{studentId}/register/{courseId}")
     public ResponseEntity<Student> registerCourse(
             @PathVariable @Min(1) final Long studentId,
             @PathVariable @Min(1) final Long courseId
@@ -84,7 +84,7 @@ public class StudentController {
     }
 
     // Filter all students with a specific course
-    @GetMapping("/course/:courseId")
+    @GetMapping("/course/{courseId}")
     public ResponseEntity<List<Student>> getAllStudentsByCourse(
             @PathVariable @Min(1) final Long courseId
     ) {
@@ -93,7 +93,7 @@ public class StudentController {
     }
 
     // Filter all students without any courses
-    @GetMapping("/name/:name/surname/:surname")
+    @GetMapping("/name/{name}/surname/{surname}")
     public ResponseEntity<List<Student>> getAllStudentsByNameAndSurname(
             @PathVariable @NotBlank @Size(max = 15) final String name,
             @PathVariable @NotBlank @Size(max = 20) final String surname
@@ -102,7 +102,7 @@ public class StudentController {
         return new ResponseEntity<>(allByNameAndSurname, HttpStatus.OK);
     }
 
-    @GetMapping("/surname/:surname")
+    @GetMapping("/surname/{surname}")
     public ResponseEntity<List<Student>> getAllStudentsBySurname(
             @PathVariable @NotBlank @Size(max = 20) final String surname
     ) {
