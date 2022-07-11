@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CourseServiceImplTest {
+public class CourseServiceImplTest {
 
     @Mock
     private CourseRepository courseRepository;
@@ -144,7 +144,7 @@ class CourseServiceImplTest {
         Assert.assertEquals(expectedFilteredCoursesByTitle.size(), allActualCoursesByTitle.size());
     }
 
-    private List<Course> getSampleTestCourses() {
+    public static List<Course> getSampleTestCourses() {
 
         Set<Student> sampleStudentList1 = new HashSet<>();
         Set<Student> sampleStudentList2 = new HashSet<>();
