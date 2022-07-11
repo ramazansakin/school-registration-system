@@ -38,7 +38,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentById(final Long id) {
         Optional<Student> byId = studentRepository.findById(id);
-        return byId.orElseThrow(() -> new EntityNotFoundException("Student by id : " + id + " "));
+        return byId.orElseThrow(() -> {
+            log.error("Student entity not found with id : " + id);
+            return new EntityNotFoundException("Student by id : " + id);
+        });
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.rsakin.schoolregistrationsystem.model.entity.Student;
 import com.rsakin.schoolregistrationsystem.repo.CourseRepository;
 import com.rsakin.schoolregistrationsystem.service.CourseService;
 import com.rsakin.schoolregistrationsystem.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -37,7 +39,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourseById(final Long id) {
         Optional<Course> byId = courseRepository.findById(id);
-        return byId.orElseThrow(() -> new EntityNotFoundException("Course by id : " + id + " "));
+        return byId.orElseThrow(() -> {
+            log.error("Course entity not found with id : " + id);
+            return new EntityNotFoundException("Course by id : " + id);
+        });
     }
 
     @Override
