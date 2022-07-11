@@ -23,6 +23,9 @@ postman_collection folder to test with already defined data.
 
 Go: [Postman Collection](./postman_collection/SchoolRegistrationSystem.postman_collection.json)
 
+Sample Usage with related collection:
+![StundetService - GetAllStudentsApi](./misc/getAllStudents.JPG)
+
 ### How to start service with docker-compose:
 
 On docker-compose file, everything was configured and ready to start both service and MySQL database. You just need to
