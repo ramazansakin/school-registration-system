@@ -66,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
         if (studentById.getCourses().size() >= MAX_REGISTERED_COURSE_NUMBER) {
             throw new MaxEnrollmentOrRegistrationNumberExceededException(
                     "Max course registration number is " + MAX_REGISTERED_COURSE_NUMBER
-                            + " and it was exceeded by student : " + studentById
+                            + " and it was exceeded by student by id : " + studentId
             );
         } else if (courseById.getStudents().size() >= MAX_ENROLLED_STUDENT_NUMBER) {
             throw new MaxEnrollmentOrRegistrationNumberExceededException(
@@ -77,10 +77,11 @@ public class StudentServiceImpl implements StudentService {
         List<Long> studentRegisteredCourseIds =
                 studentById.getCourses().parallelStream().map(Course::getId).collect(Collectors.toList());
         if (studentRegisteredCourseIds.contains(courseId)) {
-            throw new AlreadyEnrolledCourseException("The student by id" + studentById +
+            throw new AlreadyEnrolledCourseException("The student by id " + studentId +
                     " already registered this course [" + courseId + "]");
         }
         studentById.registerCourse(courseById);
+        studentRepository.save(studentById);
         return studentById;
     }
 

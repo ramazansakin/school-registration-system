@@ -18,7 +18,7 @@ public class GenericExceptionHandler {
 
     @ExceptionHandler(AlreadyEnrolledCourseException.class)
     public ResponseEntity<Map> handleAlreadyEnrolledCourseException(
-            MaxEnrollmentOrRegistrationNumberExceededException exception
+            final AlreadyEnrolledCourseException exception
     ) {
         Map<String, String> response = new HashMap<>();
         response.put(ERROR_MESSAGE, exception.getMessage());
@@ -27,7 +27,7 @@ public class GenericExceptionHandler {
 
     @ExceptionHandler(MaxEnrollmentOrRegistrationNumberExceededException.class)
     public ResponseEntity<Map> handleMaxEnrolledCourseNumberExceededException(
-            MaxEnrollmentOrRegistrationNumberExceededException exception
+            final MaxEnrollmentOrRegistrationNumberExceededException exception
     ) {
         Map<String, String> response = new HashMap<>();
         response.put(ERROR_MESSAGE, exception.getMessage());
@@ -35,14 +35,14 @@ public class GenericExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map> handleEntityNotFoundException(EntityNotFoundException exception) {
+    public ResponseEntity<Map> handleEntityNotFoundException(final EntityNotFoundException exception) {
         Map<String, String> response = new HashMap<>();
         response.put(ERROR_MESSAGE, exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map> handleGeneralException(Exception exception) {
+    public ResponseEntity<Map> handleGeneralException(final Exception exception) {
         Map<String, String> response = new HashMap<>();
         response.put(ERROR_MESSAGE, exception.getMessage());
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
