@@ -71,6 +71,7 @@ public class CourseServiceImpl implements CourseService {
 
         List<Course> allCourses = getAllCourses();
         return allCourses.stream().filter(course -> {
+            // Get all student Ids related to that course & compare with input
             List<Long> studentIds = course.getStudents().stream().map(Student::getId).collect(Collectors.toList());
             return studentIds.contains(studentId);
         }).collect(Collectors.toList());

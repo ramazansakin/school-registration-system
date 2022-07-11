@@ -67,21 +67,23 @@ public class StudentServiceImpl implements StudentService {
         Student studentById = getStudentById(studentId);
         Course courseById = courseService.getCourseById(courseId);
         if (studentById.getCourses().size() >= MAX_REGISTERED_COURSE_NUMBER) {
-            throw new MaxEnrollmentOrRegistrationNumberExceededException(
-                    "Max course registration number is " + MAX_REGISTERED_COURSE_NUMBER
-                            + " and it was exceeded by student by id : " + studentId
-            );
+            String formattedError = String.format("Max course registration number is %d" +
+                    " and it was exceeded by student by id : %d", MAX_REGISTERED_COURSE_NUMBER, studentId);
+            log.error(formattedError);
+            throw new MaxEnrollmentOrRegistrationNumberExceededException(formattedError);
         } else if (courseById.getStudents().size() >= MAX_ENROLLED_STUDENT_NUMBER) {
-            throw new MaxEnrollmentOrRegistrationNumberExceededException(
-                    "Max enrolled student number per course number is " + MAX_ENROLLED_STUDENT_NUMBER
-                            + " and it was exceeded by course : " + courseId
-            );
+            String formattedError = String.format("Max enrolled student number per course number is %d " +
+                    "and it was exceeded by course : %d", MAX_ENROLLED_STUDENT_NUMBER, courseId);
+            log.error(formattedError);
+            throw new MaxEnrollmentOrRegistrationNumberExceededException(formattedError);
         }
         List<Long> studentRegisteredCourseIds =
                 studentById.getCourses().parallelStream().map(Course::getId).collect(Collectors.toList());
         if (studentRegisteredCourseIds.contains(courseId)) {
-            throw new AlreadyEnrolledCourseException("The student by id " + studentId +
-                    " already registered this course [" + courseId + "]");
+            String formattedError = String.format("The student by id %d already registered this course [%d]",
+                    studentId, courseId);
+            log.error(formattedError);
+            throw new AlreadyEnrolledCourseException(formattedError);
         }
         studentById.registerCourse(courseById);
         studentRepository.save(studentById);
@@ -96,6 +98,7 @@ public class StudentServiceImpl implements StudentService {
 
         List<Student> allStudents = getAllStudents();
         return allStudents.stream().filter(student -> {
+            // Get all courses Ids related to that student & compare with input
             List<Long> studentCourseIds = student.getCourses().stream().map(Course::getId).collect(Collectors.toList());
             return studentCourseIds.contains(courseId);
         }).collect(Collectors.toList());
@@ -104,12 +107,14 @@ public class StudentServiceImpl implements StudentService {
     // Filter all students without any courses
     @Override
     public List<Student> findAllByNameAndSurname(final String name, final String surname) {
+        log.info("Get all Students by Name and Surname IgnoreCase and ordered by Surname");
         return studentRepository
                 .findAllByNameContainingIgnoreCaseAndSurnameContainingIgnoreCaseOrderBySurname(name, surname);
     }
 
     @Override
     public List<Student> findAllBySurname(final String surname) {
+        log.info("Get all Students by Surname IgnoreCase and ordered by Surname");
         return studentRepository.findAllBySurnameContainingIgnoreCaseOrderBySurname(surname);
     }
 
