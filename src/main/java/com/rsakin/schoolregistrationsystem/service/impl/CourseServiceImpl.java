@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,8 +73,12 @@ public class CourseServiceImpl implements CourseService {
         List<Course> allCourses = getAllCourses();
         return allCourses.stream().filter(course -> {
             // Get all student Ids related to that course & compare with input
-            List<Long> studentIds = course.getStudents().stream().map(Student::getId).collect(Collectors.toList());
-            return studentIds.contains(studentId);
+            if (!CollectionUtils.isEmpty(course.getStudents())) {
+                List<Long> studentIds = course.getStudents().stream().map(Student::getId).collect(Collectors.toList());
+                if (!CollectionUtils.isEmpty(studentIds))
+                    return studentIds.contains(studentId);
+            }
+            return false;
         }).collect(Collectors.toList());
     }
 
