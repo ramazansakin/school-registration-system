@@ -50,7 +50,6 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    // TODO : create new student with courses
     @ApiOperation("Create a student")
     @PostMapping(value = "/create")
     public ResponseEntity<Student> saveStudent(
