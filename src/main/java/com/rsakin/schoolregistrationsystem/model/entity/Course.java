@@ -1,7 +1,9 @@
 package com.rsakin.schoolregistrationsystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
@@ -16,6 +18,8 @@ import java.util.Set;
 
 // Not used because of Data lombok annotation causes StackOverflow exception because of circular dependency
 // @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "course")
 public class Course {
