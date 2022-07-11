@@ -38,7 +38,7 @@ When you need to down and delete old pods, you can run:
 
 - docker compose down
 
-NOTE: If you want to make some changes on source code, then you need to build the code like
+<b>NOTE</b>: If you want to make some changes on source code, then you need to build the code like
 re/cleaning and installing to export updated .jar file than, you need to run:
 
 - docker compose build
@@ -58,3 +58,7 @@ I also want to add and improve something below but had not much time to work on 
 
 - DTOs with Mapper/Mapstruct to use on request/responses
 - AOP Usage with defining an interceptor to manage logging
+
+<b>NOTE:</b> I created unit/integration tests for course service/controller but I didnt create them 
+for student service/controller because I thought they ll be almost the same and 
+I had not much time to complete in weekdays. Thanks.
