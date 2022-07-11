@@ -1,5 +1,6 @@
 package com.rsakin.schoolregistrationsystem.service.impl;
 
+import com.rsakin.schoolregistrationsystem.exception.AlreadyEnrolledCourseException;
 import com.rsakin.schoolregistrationsystem.exception.EntityNotFoundException;
 import com.rsakin.schoolregistrationsystem.exception.MaxEnrollmentOrRegistrationNumberExceededException;
 import com.rsakin.schoolregistrationsystem.model.entity.Course;
@@ -72,6 +73,12 @@ public class StudentServiceImpl implements StudentService {
                     "Max enrolled student number per course number is " + MAX_ENROLLED_STUDENT_NUMBER
                             + " and it was exceeded by course : " + courseId
             );
+        }
+        List<Long> studentRegisteredCourseIds =
+                studentById.getCourses().parallelStream().map(Course::getId).collect(Collectors.toList());
+        if (studentRegisteredCourseIds.contains(courseId)) {
+            throw new AlreadyEnrolledCourseException("The student by id" + studentById +
+                    " already registered this course [" + courseId + "]");
         }
         studentById.registerCourse(courseById);
         return studentById;
