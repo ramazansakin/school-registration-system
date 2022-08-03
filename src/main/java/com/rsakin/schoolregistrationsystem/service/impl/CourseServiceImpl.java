@@ -47,15 +47,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course addCourse(final Course airport) {
-        return courseRepository.save(airport);
+    public Course addCourse(final Course course) {
+        return courseRepository.save(course);
     }
 
     @Override
-    public Course updateCourse(final Long id, final Course airport) {
+    public Course updateCourse(final Long id, final Course course) {
         getCourseById(id);
-        airport.setId(id);
-        return courseRepository.save(airport);
+        course.setId(id);
+        return courseRepository.save(course);
     }
 
     @Override
