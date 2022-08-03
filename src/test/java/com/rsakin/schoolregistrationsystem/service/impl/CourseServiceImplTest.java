@@ -95,10 +95,10 @@ public class CourseServiceImplTest {
         long courseId = 1L;
         Course course = getSampleTestCourses().get(0);
 
+        // when -  action or the behaviour that we are going test
         when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
         doNothing().when(courseRepository).delete(course);
 
-        // when -  action or the behaviour that we are going test
         courseService.deleteCourse(courseId);
 
         // then - verify the output
